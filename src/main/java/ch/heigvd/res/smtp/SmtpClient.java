@@ -1,6 +1,6 @@
 package ch.heigvd.res.smtp;
 
-import ch.heigvd.res.model.mail.Message;
+import ch.heigvd.res.model.mail.Mail;
 
 import java.io.IOException;
 
@@ -13,7 +13,7 @@ public class SmtpClient implements MailClient{
     }
 
     @Override
-    public void sendMessage(Message message) throws IOException {
+    public void sendMessage(Mail mail) throws IOException {
 
     }
 }

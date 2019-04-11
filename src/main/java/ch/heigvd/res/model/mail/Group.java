@@ -10,5 +10,11 @@ public class Group {
         this.people = new LinkedList<>();
     }
 
+    public void addPerson(Person person){
+        this.people.add(person);
+    }
 
+    public List<Person> getPeople(){
+        return this.people;
+    }
 }

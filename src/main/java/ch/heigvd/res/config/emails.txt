@@ -1,0 +1,6 @@
+page.didier@heig-vd.ch
+poulard.remi@heig-vd.ch
+a.b@c.d
+a.b@c.e
+a.b@c.f
+a.b@c.g
