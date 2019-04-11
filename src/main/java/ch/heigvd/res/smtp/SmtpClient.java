@@ -6,63 +6,75 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import static ch.heigvd.res.smtp.Protocole.*;
 
 public class SmtpClient implements MailClient{
-    private String serverAddress;
-    private int port;
-    static PrintWriter out;
-    static BufferedReader in;
 
-    public SmtpClient(String serverAddress, int port){
+    private String serverAddress;
+    private int serverPort;
+
+    private PrintWriter out;
+    private BufferedReader in;
+
+    public SmtpClient(String serverAddress, int serverPort){
         this.serverAddress=serverAddress;
-        this.port = port;
+        this.serverPort = serverPort;
     }
 
     @Override
     public void sendMessage(Mail mail) throws IOException {
-        Socket socket = new Socket(serverAddress, port);
-        String line;
-        out = new PrintWriter(socket.getOutputStream());
-        out.flush();
 
+        Socket socket = new Socket(serverAddress, serverPort);
 
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        line = in.readLine();System.out.println(line);
-        out.write("ehlo " +serverAddress+"\r\n");
-        out.flush();
-        line = in.readLine();System.out.println(line);
-        line = in.readLine();System.out.println(line);
-        line = in.readLine();System.out.println(line);
+        out = new PrintWriter(socket.getOutputStream());
 
-        out.write("mail from: "+mail.getFrom()+"\r\n");
-        out.flush();
+        sendCommand(EHLO,serverAddress);
+        read();
+        read();
+        read();
 
-        line = in.readLine();System.out.println(line);
+        sendCommand(FROM,mail.getFrom());
+        read();
 
+        // Are you sur about that ?
         String to = new String();
         for (String m : mail.getTo()){
             to += m +", ";
         }
-        out.write("rcpt to: "+to+"\r\n");
+
+        sendCommand(TO,to);
+        read();
+
+        // HAck : Make 2 function ?
+        sendCommand(DATA,"");
+        sendCommand("","Subject :" +mail.getConent().getSubject());
+        sendCommand("",mail.getConent().getBody());
+
+        sendCommand(END,"");
+        read();
+
+        sendCommand(QUIT,"");
+        read();
+        socket.close();
+    }
+    private void sendCommand(String protocole, String value){
+        out.write(protocole+ value + EOL);
         out.flush();
+    }
+    private String read(){
+        String serverResponse = "";
+        try {
+            serverResponse=  in.readLine();
+            Logger.getLogger(SmtpClient.class.getName()).log(Level.INFO,serverResponse);
 
-        line = in.readLine();System.out.println(line);
-
-
-        out.write("data"+"\r\n");
-        out.flush();
-
-        line = in.readLine();System.out.println(line);
-        out.write("Subject: "+ mail.getConent().getSubject()+"\r\n");
-        out.flush();
-
-        out.write(mail.getConent().getBody()+"\r\n");
-        out.flush();
-
-        out.write("."+"\r\n");
-        out.flush();
-        line = in.readLine();System.out.println(line);
+        } catch (IOException e) {
+            Logger.getLogger(SmtpClient.class.getName()).log(Level.SEVERE, null,e);
+        }
+        return serverResponse;
     }
 }

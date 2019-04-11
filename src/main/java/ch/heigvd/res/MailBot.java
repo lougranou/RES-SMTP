@@ -17,36 +17,19 @@ import java.util.List;
 public class MailBot {
     public static void main(String[] args) throws IOException {
 
+        //TODO : Read config file
         SmtpClient client = new SmtpClient("localhost",25);
-
-
         final int NB_GROUP = 2;
-        List<Person> victims = new LinkedList<>();
+
 
         String pathToFile = "./src/main/java/ch/heigvd/res/config/emails.txt";
-        try {
-            BufferedReader in = new BufferedReader(new FileReader(pathToFile));
-            String line;
-            while ((line = in.readLine()) != null) {
-                victims.add(new Person(line));
-            }
-        } catch (FileNotFoundException e) {
-            System.err.println("Error in parseMessage");
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        LinkedList<Person> victims = Person.parseFile(pathToFile);
 
-
-        Group[] groups = new Group[NB_GROUP];
-        for (int i = 0; i < groups.length; ++i) {
-            groups[i] = new Group();
-        }
-
-        for (int i = 0; i < victims.size(); ++i) {
-            groups[i % NB_GROUP].addPerson(victims.get(i));
-        }
-
+        ArrayList<Group> groups = new ArrayList<>();
+        for (int i =0;i< NB_GROUP;i++)
+            groups.add(new Group());
+        for(int i = 0; i< victims.size();i++)
+            groups.get(i % NB_GROUP).addPerson(victims.get(1));
 
         pathToFile = "./src/main/java/ch/heigvd/res/config/prankMessage.txt";
         LinkedList<Message> messages = Message.parseFile(pathToFile);
@@ -57,6 +40,5 @@ public class MailBot {
         for(Mail m : mails){
             client.sendMessage(m);
         }
-        int i = 0;
     }
 }
