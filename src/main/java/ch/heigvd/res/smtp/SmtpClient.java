@@ -52,7 +52,8 @@ public class SmtpClient implements MailClient{
 
         // HAck : Make 2 function ?
         sendCommand(DATA,"");
-        sendCommand("","Subject :" +mail.getConent().getSubject());
+        read();
+        sendCommand("","Subject :" +mail.getConent().getSubject()+EOL);
         sendCommand("",mail.getConent().getBody());
 
         sendCommand(END,"");
