@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Person {
@@ -16,8 +17,8 @@ public class Person {
         return this.mail;
     }
 
-    public static LinkedList<Person> parseFile(String path){
-        LinkedList<Person> persons = new LinkedList<>();
+    public static ArrayList<Person> parseFile(String path){
+        ArrayList<Person> persons = new ArrayList<>();
         try {
             BufferedReader in = new BufferedReader(new FileReader(path));
             String line;

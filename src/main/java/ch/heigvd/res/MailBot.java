@@ -3,39 +3,44 @@ package ch.heigvd.res;
 import ch.heigvd.res.model.mail.*;
 import ch.heigvd.res.smtp.SmtpClient;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+
+import static ch.heigvd.res.model.mail.Group.createGroups;
 
 public class MailBot {
-    public static void main(String[] args) throws IOException {
 
-        Config config = new Config("./src/main/java/ch/heigvd/res/config/config.txt");
-        SmtpClient client = new SmtpClient(config.getServerAdress(),config.getServerPort());
-        LinkedList<Person> victims = Person.parseFile( "./src/main/java/ch/heigvd/res/config/emails.txt");
+    static private final String CONFIG_FILE_PATH = "./src/main/java/ch/heigvd/res/config/";
 
-        ArrayList<Group> groups = new ArrayList<>();
+    static private SmtpClient client;
+    static private LinkedList<Group> groups;
+    static public Config config;
+    static private ArrayList<Person> victims;
+    static private LinkedList<Message> messages;
+    static private LinkedList<Mail> mails;
 
-        //HACK
-        for (int i =0;i< config.getNbGroup();i++){
-            groups.add(new Group());
-        }
-        for(int i = 0; i< victims.size();i++){
-            groups.get(i % config.getNbGroup()).addPerson(victims.get(1));
-        }
+    public static void main(String[] args) {
+        try {
 
-        LinkedList<Message> messages = Message.parseFile("./src/main/java/ch/heigvd/res/config/prankMessage.txt");
-        LinkedList<Mail> mails = new LinkedList<>();
-        for (Group g : groups) {
-            mails.add(new Mail(g.getSenderVictimAddress(), g.getReciversVictimAddress(), null, null, messages.get(0)));
+            initialisation();
+
+            groups= createGroups(victims,messages);
+            mails = Mail.createMails(groups);
+
+            client.sendMails(mails);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
-        for(Mail m : mails){
-            client.sendMessage(m);
-        }
+    }
+
+
+
+    private static void initialisation() {
+        config = new Config(CONFIG_FILE_PATH+"config.txt");
+        victims = Person.parseFile( CONFIG_FILE_PATH+"emails.txt");
+        messages = Message.parseFile(CONFIG_FILE_PATH+"prankMessage.txt");
+
+        client = new SmtpClient(config.serverAdress,config.serverPort);
     }
 }

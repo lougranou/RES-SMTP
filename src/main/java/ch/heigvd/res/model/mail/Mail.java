@@ -1,7 +1,7 @@
 package ch.heigvd.res.model.mail;
 
-import java.io.*;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Mail {
     private String from;
@@ -15,6 +15,16 @@ public class Mail {
         this.cc = cc;
         this.bcc = bcc;
         this.conent = content;
+    }
+
+    public static LinkedList<Mail> createMails(LinkedList<Group> groups) {
+        LinkedList<Mail> mails = new LinkedList<>();
+
+        for(Group g : groups){
+            mails.add(new Mail(g.getSenderVictimAddress(),g.getReciversVictimAddress(),null, null,g.getPrankMessage()));
+        }
+
+        return mails;
     }
 
     public String getFrom() {

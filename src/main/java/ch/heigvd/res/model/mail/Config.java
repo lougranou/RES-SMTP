@@ -7,23 +7,12 @@ import java.io.IOException;
 
 public class Config {
     private static final String SEPARATOR="=";
-    String serverAdress;
-    int serverPort;
-    int nbGroup;
+    public String serverAdress;
+    public int serverPort;
+    public int nbGroup;
+    public int minVictimsInGroup;
 
-    public String getServerAdress() {
-        return serverAdress;
-    }
-
-    public int getServerPort() {
-        return serverPort;
-    }
-
-    public int getNbGroup() {
-        return nbGroup;
-    }
-
-
+    //TODO use properties
     public Config(String path){
         try {
             BufferedReader in = new BufferedReader(new FileReader(path));

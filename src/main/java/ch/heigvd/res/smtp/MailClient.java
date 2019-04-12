@@ -5,5 +5,5 @@ import ch.heigvd.res.model.mail.Mail;
 import java.io.IOException;
 
 public interface MailClient {
-    void sendMessage(Mail mail) throws IOException;
+    void sendMail(Mail mail) throws IOException;
 }
