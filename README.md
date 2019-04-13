@@ -66,19 +66,19 @@ We split the code into 3 sub-packages :
 
 1. config, which contains configuration file and configuration manage class
 
-   ![](/home/baribal/ownCloud/HEIG/Semestre_IV/RES/Laboratoire/LAB-SMTP/RES-SMTP/images/Config.png)
+   ![](images/Config.png)
 
 2. model, which contains all informations about the victims and emails
 
-   ![](/home/baribal/ownCloud/HEIG/Semestre_IV/RES/Laboratoire/LAB-SMTP/RES-SMTP/images/model.png)
+   ![](images/model.png)
 
 3. smtp, which contains relevant code to the protocol SMTP and the TCP client
 
-   ![](/home/baribal/ownCloud/HEIG/Semestre_IV/RES/Laboratoire/LAB-SMTP/RES-SMTP/images/SMTP.png)
+   ![](images/SMTP.png)
 
 4. All of these package are contained in the package ch.heigvd.res and we found our program main class
 
-    ![](/home/baribal/ownCloud/HEIG/Semestre_IV/RES/Laboratoire/LAB-SMTP/RES-SMTP/images/MailBot.png)
+    ![](images/MailBot.png)
 
 
 
