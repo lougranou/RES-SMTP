@@ -1,6 +1,5 @@
-package ch.heigvd.res.model.mail;
+package ch.heigvd.res.model;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Mail {

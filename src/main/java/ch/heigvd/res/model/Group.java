@@ -1,4 +1,4 @@
-package ch.heigvd.res.model.mail;
+package ch.heigvd.res.model;
 
 import ch.heigvd.res.MailBot;
 
@@ -48,7 +48,7 @@ public class Group {
         if(victims.size()<MailBot.config.minVictimsInGroup)
             throw new Exception("Not enouh victims to create a group");
         if(MailBot.config.nbGroup > messages.size())
-            throw new Exception("Not enouh prank messages to have one different for each group");
+            throw new Exception("Violate pigeonhole principle! Not enouh prank messages to have one different for each group");
 
         Collections.shuffle(victims);
         Collections.shuffle(messages);

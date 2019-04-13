@@ -1,12 +1,17 @@
 package ch.heigvd.res;
 
-import ch.heigvd.res.model.mail.*;
+import ch.heigvd.res.config.Config;
+import ch.heigvd.res.model.Group;
+import ch.heigvd.res.model.Mail;
+import ch.heigvd.res.model.Message;
+import ch.heigvd.res.model.Person;
+import ch.heigvd.res.model.*;
 import ch.heigvd.res.smtp.SmtpClient;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import static ch.heigvd.res.model.mail.Group.createGroups;
+import static ch.heigvd.res.model.Group.createGroups;
 
 public class MailBot {
 
@@ -26,7 +31,6 @@ public class MailBot {
 
             groups= createGroups(victims,messages);
             mails = Mail.createMails(groups);
-
             client.sendMails(mails);
 
         } catch (Exception e) {

@@ -1,6 +1,6 @@
 package ch.heigvd.res.smtp;
 
-import ch.heigvd.res.model.mail.Mail;
+import ch.heigvd.res.model.Mail;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -36,8 +36,7 @@ public class SmtpClient implements MailClient{
 
         sendCommand(EHLO,serverAddress);
         read();
-        read();
-        read();
+
 
         sendCommand(FROM,mail.getFrom());
         read();
@@ -71,9 +70,16 @@ public class SmtpClient implements MailClient{
     private String read(){
         String serverResponse = "";
         try {
-            serverResponse=  in.readLine();
-            Logger.getLogger(SmtpClient.class.getName()).log(Level.INFO,serverResponse);
+            while(true){
+                serverResponse=  in.readLine();
+                if(serverResponse.startsWith("250 ")  // 250 Ok response
+                        || serverResponse.startsWith("354 ") // 354 End data with <CR><LF>.<CR><LF>
+                        || serverResponse.startsWith("221 ")){ // 221 Bye
+                    break;
+                }
+                Logger.getLogger(SmtpClient.class.getName()).log(Level.INFO,serverResponse);
 
+            }
         } catch (IOException e) {
             Logger.getLogger(SmtpClient.class.getName()).log(Level.SEVERE, null,e);
         }

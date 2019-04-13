@@ -1,11 +1,10 @@
-package ch.heigvd.res.model.mail;
+package ch.heigvd.res.model;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class Person {
     private String mail;

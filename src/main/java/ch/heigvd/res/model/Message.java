@@ -1,4 +1,4 @@
-package ch.heigvd.res.model.mail;
+package ch.heigvd.res.model;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
