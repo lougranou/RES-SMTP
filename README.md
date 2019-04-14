@@ -79,19 +79,19 @@ We split the code into 3 sub-packages :
 
 1. config, which contains configuration file and configuration manage class
 
-   ![](images/Config.png)
+   ![](figures/Config.png)
 
 2. model, which contains all informations about the victims and emails
 
-   ![](images/model.png)
+   ![](figures/model.png)
 
 3. smtp, which contains relevant code to the protocol SMTP and the TCP client
 
-   ![](images/SMTP.png)
+   ![](figures/SMTP.png)
 
 4. All of these package are contained in the package ch.heigvd.res and we found our program main class
 
-    ![](images/MailBot.png)
+    ![](figures/MailBot.png)
 
 
 
