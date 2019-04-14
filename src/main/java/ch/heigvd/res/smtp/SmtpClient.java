@@ -1,6 +1,5 @@
 package ch.heigvd.res.smtp;
 
-import ch.heigvd.res.config.Config;
 import ch.heigvd.res.model.Mail;
 
 import java.io.BufferedReader;
@@ -8,7 +7,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Base64;
 import java.util.LinkedList;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,17 +17,17 @@ import static ch.heigvd.res.smtp.Protocole.*;
 
 public class SmtpClient implements MailClient {
 
-    private Config config;
+    private Properties config;
 
     private Socket socket;
     private PrintWriter out;
     private BufferedReader in;
 
 
-    public SmtpClient(Config config){
+    public SmtpClient(Properties config){
         this.config = config;
         try {
-            this.socket = new Socket(config.serverAddress, config.serverPort);
+            this.socket = new Socket(config.getProperty("serverAddress"), Integer.parseInt(config.getProperty("serverPort")));
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream());
 
@@ -138,7 +139,7 @@ public class SmtpClient implements MailClient {
         /**
          * no authentication required
          */
-        if(config.authlogin){
+        if(config.getProperty("authlogin").equals("false")){
             return;
         }
 
@@ -146,9 +147,9 @@ public class SmtpClient implements MailClient {
         sendCommand(AUTH_LOGIN, "");
         Logger.getLogger(SmtpClient.class.getName()).log(Level.INFO,read());
 
-        sendCommand("", config.usernameB64);
+        sendCommand("", Base64.getEncoder().encodeToString(config.getProperty("username").getBytes()));
         Logger.getLogger(SmtpClient.class.getName()).log(Level.INFO,read());
-        sendCommand("", config.passwordB64);
+        sendCommand("",Base64.getEncoder().encodeToString(config.getProperty("password").getBytes()));
         Logger.getLogger(SmtpClient.class.getName()).log(Level.INFO,read());
 
 
@@ -160,7 +161,7 @@ public class SmtpClient implements MailClient {
         // server welcome message at first
         Logger.getLogger(SmtpClient.class.getName()).log(Level.INFO,read());
 
-        sendCommand(EHLO,config.serverAddress);
+        sendCommand(EHLO,config.getProperty("serverAddress"));
         Logger.getLogger(SmtpClient.class.getName()).log(Level.INFO,read());
         authentificationManager();
     }
