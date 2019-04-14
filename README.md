@@ -17,9 +17,7 @@ To set up the mock SMTP server we use a docker container accessible by ports map
 To build the corresponding docker image use the command in the directory named *Docker* :
 
 ```bash
-docker build -t "res-smtp" .  
-
-
+docker build -t "res-smtp" .
 ```
 
 Then run an instance of this fresh docker image with the correct port mapping.
@@ -41,7 +39,7 @@ To run a prank campaign you have to modify 3 files :
    ===
    ```
 
-2. **email.txt**, in this file you will add email addresses of victims, one per line like this :
+2. **emails.txt**, in this file you will add email addresses of victims, one per line like this :
 
    ```bash
    email_1@example.com
@@ -50,9 +48,9 @@ To run a prank campaign you have to modify 3 files :
 
    
 
-3. **config.txt**, in this file you can parametrize SMTP server address, SMTP server Port, number of groups you want to create. In one group, one sender victims is chosen and the other are receiver victim. Default values are :
+3. **config.properties**, in this file you can parametrize SMTP server address, SMTP server Port, number of groups you want to create. In one group, one sender victims is chosen and the other are receiver victim. Default values are :
 
-   ```bash
+   ```properties
    serverAddress=localhost
    serverPort=2525
    nbGroup=2
@@ -77,19 +75,16 @@ Please take note that the username and the passowd are encoded into *Base64* bef
 
 We split the code into 3 sub-packages :
 
-1. config, which contains configuration file and configuration manage class
 
-   ![](figures/Config.png)
-
-2. model, which contains all informations about the victims and emails
+1. model, which contains all informations about the victims and emails
 
    ![](figures/model.png)
 
-3. smtp, which contains relevant code to the protocol SMTP and the TCP client
+2. smtp, which contains relevant code to the protocol SMTP and the TCP client
 
    ![](figures/SMTP.png)
 
-4. All of these package are contained in the package ch.heigvd.res and we found our program main class
+3. All of these package are contained in the package ch.heigvd.res and we found our program main class
 
     ![](figures/MailBot.png)
 
