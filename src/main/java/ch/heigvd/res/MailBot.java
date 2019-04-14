@@ -19,7 +19,6 @@ public class MailBot {
 
     static private final String CONFIG_FILE_PATH = "./src/main/java/ch/heigvd/res/config/";
 
-    static private SmtpClient client;
     static public Properties config;
     static private ArrayList<Person> victims;
     static private LinkedList<Message> messages;
@@ -27,15 +26,12 @@ public class MailBot {
     public static void main(String[] args) {
         try {
 
-            initialisation();
+            loadFiles();
 
-            LinkedList<Mail> mails;
-            LinkedList<Group> groups;
+            LinkedList<Group> groups= createGroups(victims,messages);
+            LinkedList<Mail> mails = Mail.createMails(groups);
 
-
-            groups= createGroups(victims,messages);
-            mails = Mail.createMails(groups);
-            client.sendMails(mails);
+            new SmtpClient(config).sendMails(mails);
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -44,14 +40,11 @@ public class MailBot {
 
 
 
-    private static void initialisation() throws IOException {
-
+    private static void loadFiles() throws IOException {
         InputStream input = new FileInputStream(CONFIG_FILE_PATH+"configMockMock.properties");
         config = new Properties();
         config.load(input);
         victims = Person.parseFile( CONFIG_FILE_PATH+"emails.txt");
         messages = Message.parseFile(CONFIG_FILE_PATH+"prankMessage.txt");
-
-        client = new SmtpClient(config);
     }
 }

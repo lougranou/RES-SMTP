@@ -13,6 +13,9 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import java.util.regex.*;
+
+
 import static ch.heigvd.res.smtp.Protocole.*;
 
 public class SmtpClient implements MailClient {
@@ -44,13 +47,8 @@ public class SmtpClient implements MailClient {
 
         serverGreetings();
 
-        for(Mail m : mails){
-            try {
-                sendMail(m);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        for(Mail m : mails) {
+            sendMail(m);
         }
 
         serverGoodBye();
@@ -58,14 +56,11 @@ public class SmtpClient implements MailClient {
 
 
     @Override
-    public void sendMail(Mail mail) throws IOException {
+    public void sendMail(Mail mail) {
         String data;
 
         sendCommand(FROM,mail.getFrom());
         Logger.getLogger(SmtpClient.class.getName()).log(Level.INFO,read());
-
-
-
 
         /**
          * Multiple receiver
@@ -74,9 +69,6 @@ public class SmtpClient implements MailClient {
             sendCommand(TO,m);
             Logger.getLogger(SmtpClient.class.getName()).log(Level.INFO,read());
         }
-
-
-
 
         sendCommand(DATA,"");
         Logger.getLogger(SmtpClient.class.getName()).log(Level.INFO,read());
@@ -116,13 +108,14 @@ public class SmtpClient implements MailClient {
 
                 if(serverResponse.length() > 3){
 
-                    // check if server wait for instruction protocle : <digit><digit><digit><space>
-                    if(Character.isDigit(serverResponse.charAt(0))
-                        && Character.isDigit(serverResponse.charAt(1))
-                        && Character.isDigit(serverResponse.charAt(2))
-                        && serverResponse.charAt(3) == ' '){
+                    // check if server wait for instruction protocle : <digit><digit><digit><space><messgae>
+                    Pattern p = Pattern.compile("[0-9]{3} [\\w]");
+                    Matcher m = p.matcher(serverResponse);
+                    if(m.find()){
+                        System.out.println(serverResponse);
                         break;
                     }
+
                 }
 
                 //Logger.getLogger(SmtpClient.class.getName()).log(Level.INFO,serverResponse);
