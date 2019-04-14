@@ -53,12 +53,25 @@ To run a prank campaign you have to modify 3 files :
 3. **config.txt**, in this file you can parametrize SMTP server address, SMTP server Port, number of groups you want to create. In one group, one sender victims is chosen and the other are receiver victim. Default values are :
 
    ```bash
-   serverAdress=localhost
+   serverAddress=localhost
    serverPort=2525
    nbGroup=2
+   authlogin=false
    ```
 
-   
+
+If you want to use **authentication**, you need add *username* and *passwd* to the configuration file. 
+
+```bash
+    serverAddress=smtp.mailtrap.io
+    serverPort=2525
+    nbGroup=2
+    authlogin=true
+    username=a023b304611e91
+    password=7dc21f84a07ee5
+```
+
+Please take note that the username and the passowd are encoded into *Base64* before being sent.
 
 #### <u>Description of the implementation</u>
 

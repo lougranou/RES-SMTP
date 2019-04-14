@@ -48,7 +48,6 @@ public class SmtpClient implements MailClient {
         for(Mail m : mails){
             try {
                 sendMail(m);
-                break;
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -97,9 +96,8 @@ public class SmtpClient implements MailClient {
             data += m + ',';
         }
         data += EOL;
-        data += SUBJECT + mail.getConent().getSubject()+EOL;
+        data += SUBJECT + mail.getConent().getSubject()+EOL+EOL; // need to add additional line between subject and body
         data += mail.getConent().getBody() + EOL;
-
 
         sendCommand("", data);
         sendCommand(END,"");
