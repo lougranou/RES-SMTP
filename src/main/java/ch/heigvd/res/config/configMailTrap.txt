@@ -1,0 +1,6 @@
+serverAddress=smtp.mailtrap.io
+serverPort=2525
+nbGroup=2
+authlogin=true
+username=a023b304611e91
+password=7dc21f84a07ee5

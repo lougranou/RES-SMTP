@@ -22,7 +22,7 @@ public class Person {
             BufferedReader in = new BufferedReader(new FileReader(path));
             String line;
             while ((line = in.readLine()) != null) {
-                persons.add(new Person(line));
+                persons.add(new Person('<' + line + '>'));
             }
         } catch (FileNotFoundException e) {
             System.err.println("File "+path + "not found");

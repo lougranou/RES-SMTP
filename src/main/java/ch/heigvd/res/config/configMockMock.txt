@@ -1,0 +1,4 @@
+serverAddress=localhost
+serverPort=2525
+nbGroup=2
+authlogin=false

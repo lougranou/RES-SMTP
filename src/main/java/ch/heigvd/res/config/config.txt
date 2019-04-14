@@ -1,3 +1,0 @@
-serverAdress=localhost
-serverPort=2525
-nbGroup=2

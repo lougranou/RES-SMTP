@@ -1,6 +1,6 @@
-subject: Vous êtes le millionième visiteur de heig-vd.ch !
-content: Vous avez gagné le dernier Ipad Pro Apple et nous vous en félicitons ! Pour retirer votre gain veuillez rentrer votre identifiant et mot de passe banquaire.
+subject: Vous etes le millionieme visiteur de heig-vd.ch !
+content: Vous avez gagne le dernier Ipad Pro Apple et nous vous en felicitons ! Pour retirer votre gain veuillez rentrer votre identifiant et mot de passe banquaire.
 ===
-subject: Vous êtes un crétin !
+subject: Vous etes un cretin !
 content: Connich'ho hwoa nigga'chan
 ===

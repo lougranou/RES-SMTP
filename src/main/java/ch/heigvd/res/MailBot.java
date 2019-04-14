@@ -5,7 +5,6 @@ import ch.heigvd.res.model.Group;
 import ch.heigvd.res.model.Mail;
 import ch.heigvd.res.model.Message;
 import ch.heigvd.res.model.Person;
-import ch.heigvd.res.model.*;
 import ch.heigvd.res.smtp.SmtpClient;
 
 import java.util.ArrayList;
@@ -41,10 +40,11 @@ public class MailBot {
 
 
     private static void initialisation() {
-        config = new Config(CONFIG_FILE_PATH+"config.txt");
+        //config = new Config(CONFIG_FILE_PATH+"configMockMock.txt");
+        config = new Config(CONFIG_FILE_PATH+"configMailTrap.txt");
         victims = Person.parseFile( CONFIG_FILE_PATH+"emails.txt");
         messages = Message.parseFile(CONFIG_FILE_PATH+"prankMessage.txt");
 
-        client = new SmtpClient(config.serverAdress,config.serverPort);
+        client = new SmtpClient(config);
     }
 }
