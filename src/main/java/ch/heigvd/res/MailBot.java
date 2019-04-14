@@ -17,16 +17,18 @@ public class MailBot {
     static private final String CONFIG_FILE_PATH = "./src/main/java/ch/heigvd/res/config/";
 
     static private SmtpClient client;
-    static private LinkedList<Group> groups;
     static public Config config;
     static private ArrayList<Person> victims;
     static private LinkedList<Message> messages;
-    static private LinkedList<Mail> mails;
 
     public static void main(String[] args) {
         try {
 
             initialisation();
+
+            LinkedList<Mail> mails;
+            LinkedList<Group> groups;
+
 
             groups= createGroups(victims,messages);
             mails = Mail.createMails(groups);
@@ -40,8 +42,8 @@ public class MailBot {
 
 
     private static void initialisation() {
-        //config = new Config(CONFIG_FILE_PATH+"configMockMock.txt");
-        config = new Config(CONFIG_FILE_PATH+"configMailTrap.txt");
+        config = new Config(CONFIG_FILE_PATH+"configMockMock.txt");
+        //config = new Config(CONFIG_FILE_PATH+"configMailTrap.txt");
         victims = Person.parseFile( CONFIG_FILE_PATH+"emails.txt");
         messages = Message.parseFile(CONFIG_FILE_PATH+"prankMessage.txt");
 

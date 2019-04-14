@@ -33,8 +33,6 @@ public class SmtpClient implements MailClient {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
 
@@ -140,7 +138,7 @@ public class SmtpClient implements MailClient {
         /**
          * no authentication required
          */
-        if(config.authlogin == false){
+        if(config.authlogin){
             return;
         }
 
