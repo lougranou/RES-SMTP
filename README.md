@@ -60,7 +60,7 @@ To run a prank campaign you have to modify 3 files :
 
 If you want to use **authentication**, you need add *username* and *passwd* to the configuration file. 
 
-```bash
+```properties
     serverAddress=smtp.mailtrap.io
     serverPort=2525
     nbGroup=2
