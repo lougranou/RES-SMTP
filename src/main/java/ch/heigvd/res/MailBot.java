@@ -30,7 +30,6 @@ public class MailBot {
 
             LinkedList<Group> groups= createGroups(victims,messages);
             LinkedList<Mail> mails = Mail.createMails(groups);
-
             new SmtpClient(config).sendMails(mails);
 
         } catch (Exception e) {
@@ -41,7 +40,7 @@ public class MailBot {
 
 
     private static void loadFiles() throws IOException {
-        InputStream input = new FileInputStream(CONFIG_FILE_PATH+"configMockMock.properties");
+        InputStream input = new FileInputStream(CONFIG_FILE_PATH+"configMailTrap.properties");
         config = new Properties();
         config.load(input);
         victims = Person.parseFile( CONFIG_FILE_PATH+"emails.txt");

@@ -39,9 +39,6 @@ public class SmtpClient implements MailClient {
         }
     }
 
-
-
-
     public void sendMails(LinkedList<Mail> mails) throws IOException {
 
 
@@ -59,14 +56,14 @@ public class SmtpClient implements MailClient {
     public void sendMail(Mail mail) {
         String data;
 
-        sendCommand(FROM,mail.getFrom());
+        sendCommand(FROM,"<"+mail.getFrom()+">");
         Logger.getLogger(SmtpClient.class.getName()).log(Level.INFO,read());
 
         /**
          * Multiple receiver
          */
         for (String m : mail.getTo()){
-            sendCommand(TO,m);
+            sendCommand(TO,"<"+m+">");
             Logger.getLogger(SmtpClient.class.getName()).log(Level.INFO,read());
         }
 
@@ -83,9 +80,14 @@ public class SmtpClient implements MailClient {
         /**
          * Multiple receiver
          */
-        for (String m : mail.getTo()){
-            data += m + ',';
+        for(int i=0;i<mail.getTo().length;i++){
+            data += mail.getTo()[i];
+            if(i!=mail.getTo().length-1){
+                data+= ',';
+
+            }
         }
+        
         data += EOL;
         data += SUBJECT + mail.getConent().getSubject()+EOL+EOL; // need to add additional line between subject and body
         data += mail.getConent().getBody() + EOL;
@@ -112,13 +114,11 @@ public class SmtpClient implements MailClient {
                     Pattern p = Pattern.compile("[0-9]{3} [\\w]");
                     Matcher m = p.matcher(serverResponse);
                     if(m.find()){
-                        System.out.println(serverResponse);
                         break;
                     }
 
                 }
 
-                //Logger.getLogger(SmtpClient.class.getName()).log(Level.INFO,serverResponse);
 
             }
         } catch (IOException e) {
